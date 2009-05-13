@@ -1,0 +1,9 @@
+This is a duck punch for ActiveSupport::Cache::Store which allows you to read 
+from the cache and immediately write to it if the cache entry is nil. For example:
+
+ids = Rails.cache.read_and_write_if_nil("member_ids_for_clan_#{@clan.id}", 
+                                          :expires_in => 5.minutes) do
+  @clan.members.find(:all, :order => 'groupies DESC', :select => 'accounts.id').collect(&:id)
+end
+
+To use, put read_and_write_if_nil.rb in your lib and require from environment.rb
